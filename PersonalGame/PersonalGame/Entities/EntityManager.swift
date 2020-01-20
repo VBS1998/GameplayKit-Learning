@@ -9,20 +9,29 @@
 import SpriteKit
 import GameplayKit
 
-class EntityManager : NSObject, PlayerInputDelegate{
-   
+class EntityManager : NSObject, InputDelegate{
+
     let scene : SKScene
     
     var entities = Set<GKEntity>()
     var entitiesToRemove = Set<GKEntity>()
     
+    var graphs : [String : GKGraph] = [:]
+    
+    // Current State of the input
+    var inputState : InputState = .none
+    // Positions where the input went through
+    var positionsDragged : [CGPoint] = []
+    
     /// Dicionário com todos os componentSystem do jogo
     private lazy var componentSystems: [Components : GKComponentSystem] = {
         
         let tapMoveSystem = GKComponentSystem(componentClass: TapMoveComponent.self)
+        let dragMoveSystem = GKComponentSystem(componentClass: DragMoveComponent.self)
         let spriteSystem = GKComponentSystem(componentClass: SpriteComponent.self)
         
         return [.tapMoveComponent : tapMoveSystem,
+                .dragMoveComponent : dragMoveSystem,
                 .spriteComponent : spriteSystem
                ]
     } ()
@@ -43,6 +52,16 @@ class EntityManager : NSObject, PlayerInputDelegate{
         if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node{
             scene.addChild(spriteNode)
         }
+    }
+    
+    func add(_ entity: GKEntity, from scene: SKScene, withName name: String){
+        
+        if let spriteNode = scene.childNode(withName: name) as? SKSpriteNode{
+            spriteNode.removeFromParent()
+            let spriteComponent = SpriteComponent(spriteNode: spriteNode)
+            entity.addComponent(spriteComponent)
+        }
+        self.add(entity)
     }
     
     func remove(_ entity: GKEntity){
@@ -74,16 +93,37 @@ class EntityManager : NSObject, PlayerInputDelegate{
     }
     
     //--------- Player Input ---------
-    func playerInputDidChange(to actualInputType: PlayerInputType) {
-        
+    func inputDidBegin(in location: CGPoint) {
+        inputState = .began
+        positionsDragged.append(location)
     }
-       
-    func playerInputDidTap(in position: CGPoint) {
-        guard let tapMoveSystem = componentSystems[.tapMoveComponent]?.components as? [TapMoveComponent] else {return}
+    
+    func inputDidMove(to location: CGPoint){
+        //TODO: Optimize tap recognition
+        inputState = .dragged
+        positionsDragged.append(location)
+    }
+    
+    func inputDidEnd(in location: CGPoint){
         
-        for component in tapMoveSystem{
-            component.position = position
+        // If the user dragged we should have an array of points by now
+        
+        //Choose the correct array
+        positionsDragged.append(location)
+        let positions = inputState == .dragged ? positionsDragged : []
+        
+        //Clean the input aux variables
+        inputState = .none
+        positionsDragged.removeAll()
+        
+        //Execute the move
+        guard let dragMoveSystem = componentSystems[.dragMoveComponent]?.components as? [DragMoveComponent] else {return}
+        
+        for component in dragMoveSystem{
+            component.positions = positions
         }
+        
+        
     }
        
 }

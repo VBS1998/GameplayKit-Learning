@@ -22,5 +22,6 @@ class TapMoveComponent : GKComponent{
         //LE INPUT E ATUALIZA POSITION
         guard let position = self.position else {return}
         move(to: position)
+        self.position = nil
     }
 }

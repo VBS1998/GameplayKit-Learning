@@ -11,6 +11,10 @@ import GameplayKit
 
 class Player : GKEntity{
     
+    override init(){
+        super.init()
+    }
+    
     init(imageName: String){
         super.init()
         

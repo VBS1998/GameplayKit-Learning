@@ -15,21 +15,26 @@ class GameScene: SKScene {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
-    weak var playerInputDelegate : PlayerInputDelegate?
+    weak var inputDelegate : InputDelegate?
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
-        self.entityManager = EntityManager(scene: self)
-        
-        let player = Player(imageName: "PlayerStill")
-        player.removeComponent(ofType: SpriteComponent.self)
-        if let playerSpriteNode = self.childNode(withName: "Player") as? SKSpriteNode{
-            playerSpriteNode.removeFromParent()
-            let spriteComponent = SpriteComponent(spriteNode: playerSpriteNode)
-            player.addComponent(spriteComponent)
+        //Initializing the manager and getting the entities and graphs in the sks.
+        entityManager = EntityManager(scene: self)
+        for entity in entities{
+            entityManager.add(entity)
         }
-        entityManager.add(player)
+        entityManager.graphs = graphs
+        
+        //Creating the Player
+        let player = Player()
+        player.addComponent(TapMoveComponent())
+        player.addComponent(DragMoveComponent(speed: 10))
+        entityManager.add(player, from: self, withName: "Player")
+        
+        //The entity manager should handle the input
+        inputDelegate = entityManager
     }
     
     override func sceneDidLoad() {
@@ -38,16 +43,22 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for touch in touches{
-            playerInputDelegate?.playerInputDidChange(to: .tap)
-            playerInputDelegate?.playerInputDidTap(in: touch.location(in: self))
+        //It should ignore the touches other than the first
+        if let touch = touches.first{
+            inputDelegate?.inputDidBegin(in: touch.location(in: self))
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first{
+            inputDelegate?.inputDidMove(to: touch.location(in: self))
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first{
+            inputDelegate?.inputDidEnd(in: touch.location(in: self))
+        }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -56,6 +67,6 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
+        entityManager.update(currentTime)
     }
 }
