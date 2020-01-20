@@ -11,7 +11,7 @@ import SpriteKit
 
 class TapMoveComponent : GKComponent{
     
-    var position = CGPoint()
+    var position : CGPoint?
     
     func move(to dest: CGPoint){
         let spriteComponent = self.entity?.component(ofType: SpriteComponent.self)
@@ -19,7 +19,8 @@ class TapMoveComponent : GKComponent{
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        //LE INPUT E ATUALIZA POOSITION
+        //LE INPUT E ATUALIZA POSITION
+        guard let position = self.position else {return}
         move(to: position)
     }
 }

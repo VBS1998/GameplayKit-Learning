@@ -15,6 +15,8 @@ class GameScene: SKScene {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
+    weak var playerInputDelegate : PlayerInputDelegate?
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -35,6 +37,11 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for touch in touches{
+            playerInputDelegate?.playerInputDidChange(to: .tap)
+            playerInputDelegate?.playerInputDidTap(in: touch.location(in: self))
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
