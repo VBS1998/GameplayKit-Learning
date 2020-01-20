@@ -10,6 +10,10 @@ import GameplayKit
 
 class DragMoveComponent : GKComponent{
     
+    var location : CGPoint?{
+        let spriteComponent = self.entity?.component(ofType: SpriteComponent.self)
+        return spriteComponent?.node.position
+    }
     var positions : [CGPoint] = []
     var framesToWait : Int
     var framesUntilMove : Int = 0
@@ -26,7 +30,10 @@ class DragMoveComponent : GKComponent{
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds)
         
-        if positions.count > 0{
+        guard let location = self.location else {return}
+        
+        //TODO: Discover a better way to know if the first touch was close enough
+        if positions.count > 0 && location.distance(to: positions[0]) < 100{
             if framesUntilMove == 0{
                 self.move(to: positions[0])
                 positions.remove(at: 0)

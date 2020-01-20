@@ -99,8 +99,10 @@ class EntityManager : NSObject, InputDelegate{
     }
     
     func inputDidMove(to location: CGPoint){
-        //TODO: Optimize tap recognition
-        inputState = .dragged
+        //TODO: Optimize tap/drag recognition
+        if positionsDragged.count > 2{
+            inputState = .dragged
+        }
         positionsDragged.append(location)
     }
     
@@ -122,8 +124,6 @@ class EntityManager : NSObject, InputDelegate{
         for component in dragMoveSystem{
             component.positions = positions
         }
-        
-        
     }
        
 }
