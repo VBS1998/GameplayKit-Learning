@@ -18,12 +18,13 @@ class EntityManager : NSObject, InputDelegate{
     
     var graphs : [String : GKGraph] = [:]
     
-    // Current State of the input
+    /// Current State of the input
     var inputState : InputState = .none
-    // Positions where the input went through
+    
+    /// Positions where the input went through
     var positionsDragged : [CGPoint] = []
     
-    /// Dicionário com todos os componentSystem do jogo
+    /// Dictionary with all Components in the game
     private lazy var componentSystems: [Components : GKComponentSystem] = {
         
         let tapMoveSystem = GKComponentSystem(componentClass: TapMoveComponent.self)

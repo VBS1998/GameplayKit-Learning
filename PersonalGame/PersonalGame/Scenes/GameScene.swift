@@ -28,10 +28,7 @@ class GameScene: SKScene {
         entityManager.graphs = graphs
         
         //Creating the Player
-        let player = Player()
-        player.addComponent(TapMoveComponent())
-        player.addComponent(DragMoveComponent(speed: 10))
-        entityManager.add(player, from: self, withName: "Player")
+        entityManager.add(Player(), from: self, withName: "Player")
         
         //The entity manager should handle the input
         inputDelegate = entityManager

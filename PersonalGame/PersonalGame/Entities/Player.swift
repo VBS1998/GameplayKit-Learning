@@ -20,6 +20,9 @@ class Player : GKEntity{
         
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
         self.addComponent(spriteComponent)
+        
+        self.addComponent(TapMoveComponent())
+        self.addComponent(DragMoveComponent(speed: 10))
     }
     
     required init?(coder: NSCoder) {
