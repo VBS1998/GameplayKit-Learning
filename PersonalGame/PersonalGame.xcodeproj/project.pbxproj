@@ -12,6 +12,7 @@
 		070D03E623D5CF720024F7B0 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070D03E523D5CF720024F7B0 /* Components.swift */; };
 		070D03E823D628C50024F7B0 /* DragMoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070D03E723D628C50024F7B0 /* DragMoveComponent.swift */; };
 		070D03EA23D633B20024F7B0 /* CGPoint+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070D03E923D633B20024F7B0 /* CGPoint+Helper.swift */; };
+		070D03ED23D71F5E0024F7B0 /* TapStopComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070D03EC23D71F5E0024F7B0 /* TapStopComponent.swift */; };
 		070F74FF23D1EF7400B6D9B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F74FE23D1EF7400B6D9B7 /* AppDelegate.swift */; };
 		070F750123D1EF7400B6D9B7 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 070F750023D1EF7400B6D9B7 /* GameScene.sks */; };
 		070F750523D1EF7400B6D9B7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F750423D1EF7400B6D9B7 /* GameScene.swift */; };
@@ -30,6 +31,7 @@
 		070D03E523D5CF720024F7B0 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		070D03E723D628C50024F7B0 /* DragMoveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragMoveComponent.swift; sourceTree = "<group>"; };
 		070D03E923D633B20024F7B0 /* CGPoint+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Helper.swift"; sourceTree = "<group>"; };
+		070D03EC23D71F5E0024F7B0 /* TapStopComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapStopComponent.swift; sourceTree = "<group>"; };
 		070F74FB23D1EF7400B6D9B7 /* PersonalGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		070F74FE23D1EF7400B6D9B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		070F750023D1EF7400B6D9B7 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				070F751923D1F1DF00B6D9B7 /* SpriteComponent.swift */,
 				070D03E023D208910024F7B0 /* TapMoveComponent.swift */,
 				070D03E723D628C50024F7B0 /* DragMoveComponent.swift */,
+				070D03EC23D71F5E0024F7B0 /* TapStopComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				070D03EA23D633B20024F7B0 /* CGPoint+Helper.swift in Sources */,
 				070F751A23D1F1DF00B6D9B7 /* SpriteComponent.swift in Sources */,
 				070F751D23D1F31900B6D9B7 /* Player.swift in Sources */,
+				070D03ED23D71F5E0024F7B0 /* TapStopComponent.swift in Sources */,
 				070D03E823D628C50024F7B0 /* DragMoveComponent.swift in Sources */,
 				070D03E123D208910024F7B0 /* TapMoveComponent.swift in Sources */,
 				070D03E623D5CF720024F7B0 /* Components.swift in Sources */,

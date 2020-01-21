@@ -11,5 +11,6 @@ import Foundation
 enum Components{
     case spriteComponent
     case tapMoveComponent
+    case tapStopComponent
     case dragMoveComponent
 }

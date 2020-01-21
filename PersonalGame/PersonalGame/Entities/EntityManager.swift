@@ -28,11 +28,13 @@ class EntityManager : NSObject, InputDelegate{
     private lazy var componentSystems: [Components : GKComponentSystem] = {
         
         let tapMoveSystem = GKComponentSystem(componentClass: TapMoveComponent.self)
+        let tapStopSystem = GKComponentSystem(componentClass: TapStopComponent.self)
         let dragMoveSystem = GKComponentSystem(componentClass: DragMoveComponent.self)
         let spriteSystem = GKComponentSystem(componentClass: SpriteComponent.self)
         
         return [.tapMoveComponent : tapMoveSystem,
                 .dragMoveComponent : dragMoveSystem,
+                .tapStopComponent : tapStopSystem,
                 .spriteComponent : spriteSystem
                ]
     } ()
@@ -112,21 +114,31 @@ class EntityManager : NSObject, InputDelegate{
         
         // If the user dragged we should have an array of points by now
         
-        //Choose the correct array
         positionsDragged.append(location)
-        let positions = inputState == .dragged ? positionsDragged : []
+        
+        if inputState == .dragged {
+            guard let dragMoveSystem = componentSystems[.dragMoveComponent]?.components as? [DragMoveComponent] else {return}
+            
+            for component in dragMoveSystem{
+                component.positions = positionsDragged
+                component.initialPosition = positionsDragged[0]
+            }
+        }else { //tap
+            guard let tapStopSystem = componentSystems[.tapStopComponent]?.components as? [TapStopComponent] else {return}
+            guard let tapMoveSystem = componentSystems[.tapMoveComponent]?.components as? [TapMoveComponent] else {return}
+            
+            for component in tapStopSystem{
+                component.shouldStop = true
+            }
+            
+            for component in tapMoveSystem{
+                component.position = location
+            }
+        }
         
         //Clean the input aux variables
         inputState = .none
         positionsDragged.removeAll()
-        
-        //Execute the move
-        guard let dragMoveSystem = componentSystems[.dragMoveComponent]?.components as? [DragMoveComponent] else {return}
-        
-        for component in dragMoveSystem{
-            component.positions = positions
-            component.initialPosition = positions[0]
-        }
     }
        
 }

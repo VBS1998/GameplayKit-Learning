@@ -13,7 +13,7 @@ class Player : GKEntity{
     
     override init(){
         super.init()
-        self.addComponent(TapMoveComponent())
+        self.addComponent(TapStopComponent())
         self.addComponent(DragMoveComponent(speed: 10))
     }
     
