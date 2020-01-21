@@ -13,16 +13,15 @@ class Player : GKEntity{
     
     override init(){
         super.init()
+        self.addComponent(TapMoveComponent())
+        self.addComponent(DragMoveComponent(speed: 10))
     }
     
-    init(imageName: String){
-        super.init()
+    convenience init(imageName: String){
+        self.init()
         
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
         self.addComponent(spriteComponent)
-        
-        self.addComponent(TapMoveComponent())
-        self.addComponent(DragMoveComponent(speed: 10))
     }
     
     required init?(coder: NSCoder) {

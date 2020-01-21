@@ -14,7 +14,10 @@ class DragMoveComponent : GKComponent{
         let spriteComponent = self.entity?.component(ofType: SpriteComponent.self)
         return spriteComponent?.node.position
     }
+    
     var positions : [CGPoint] = []
+    var initialPosition : CGPoint?
+    
     var framesToWait : Int
     var framesUntilMove : Int = 0
     
@@ -32,8 +35,16 @@ class DragMoveComponent : GKComponent{
         
         guard let location = self.location else {return}
         
-        //TODO: Discover a better way to know if the first touch was close enough
-        if positions.count > 0 && location.distance(to: positions[0]) < 100{
+        //INITIAL POSITION
+        if let initialPosition = initialPosition{
+            if location.distance(to: initialPosition) > 100{
+                positions = []
+                framesUntilMove = 0
+            }
+            self.initialPosition = nil
+        }
+        
+        if positions.count > 0{
             if framesUntilMove == 0{
                 self.move(to: positions[0])
                 positions.remove(at: 0)

@@ -93,7 +93,8 @@ class EntityManager : NSObject, InputDelegate{
         entitiesToRemove.removeAll()
     }
     
-    //--------- Player Input ---------
+    // - MARK: Input Delegate
+    
     func inputDidBegin(in location: CGPoint) {
         inputState = .began
         positionsDragged.append(location)
@@ -124,6 +125,7 @@ class EntityManager : NSObject, InputDelegate{
         
         for component in dragMoveSystem{
             component.positions = positions
+            component.initialPosition = positions[0]
         }
     }
        
