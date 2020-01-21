@@ -28,7 +28,7 @@ class GameScene: SKScene {
         entityManager.graphs = graphs
         
         //Creating the Player
-        entityManager.add(Player(), from: self, withName: "Player")
+        entityManager.add(Player(from: self, imageName: "Player"))
         
         //The entity manager should handle the input
         inputDelegate = entityManager

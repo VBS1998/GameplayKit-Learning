@@ -15,6 +15,10 @@ class DragMoveComponent : GKComponent{
         return spriteComponent?.node.position
     }
     
+    var moving : Bool{
+        return positions.count > 0
+    }
+    
     var positions : [CGPoint] = []
     var initialPosition : CGPoint?
     
@@ -28,6 +32,12 @@ class DragMoveComponent : GKComponent{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didAddToEntity() {
+        super.didAddToEntity()
+        
+        
     }
     
     override func update(deltaTime seconds: TimeInterval) {

@@ -57,16 +57,6 @@ class EntityManager : NSObject, InputDelegate{
         }
     }
     
-    func add(_ entity: GKEntity, from scene: SKScene, withName name: String){
-        
-        if let spriteNode = scene.childNode(withName: name) as? SKSpriteNode{
-            spriteNode.removeFromParent()
-            let spriteComponent = SpriteComponent(spriteNode: spriteNode)
-            entity.addComponent(spriteComponent)
-        }
-        self.add(entity)
-    }
-    
     func remove(_ entity: GKEntity){
         if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node{
             spriteNode.removeFromParent()
